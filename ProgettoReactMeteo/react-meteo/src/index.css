@@ -1,0 +1,88 @@
+ .title{
+    font-size: 50px;
+}
+.card-meteo{
+    height: 15rem;
+    margin: 0 auto;
+    background-color: rgb(243, 204, 137);
+    border-radius: 10px;
+   
+}
+.my-input{
+    width: 50%;
+}
+#root{
+    background-image: url(https://www.suoloesalute.it/wp-content/uploads/2015/09/sfondo-meteo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.other-color{
+    background-color: rgb(243, 204, 137);
+}
+
+a{
+    text-decoration: none;
+    color: red;
+}
+.sunrise{
+    background-image: url(https://images.photowall.com/products/60731/sunrise-by-the-sea.jpg?h=699&q=85);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.sunset{
+    background-image: url(https://www.ambong-ambong.com/wp-content/uploads/2023/03/istockphoto-1172427455-612x612-1.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.button-color{
+    background-color: #2B95D1;
+}
+
+svg {
+    width: 50%;
+    height: 50%;
+   }
+
+ p{
+    font-size: 32px;
+ } 
+
+    @media screen and (max-width:1500px) {
+     h3,h1,p{
+        font-size: 26px;
+        }
+    }
+    
+    @media screen and (max-width:1000px) {
+      h3, h1,p{
+          font-size: 22px;
+      }
+      .change-sm{
+          display: flex;
+          flex-wrap: wrap;
+      }
+     }
+    @media screen and (max-width:768px){
+        #sun-resp{
+          display: block!important;
+          
+        }
+        .title {
+          font-size: 40px;
+        }
+        .subtitle{
+          font-size: 18px;
+        }
+        .my-input{
+          width: 100%;
+          
+        }
+        .my-form{
+            position: relative;
+            right: 70px;
+        }
+      
+         }
