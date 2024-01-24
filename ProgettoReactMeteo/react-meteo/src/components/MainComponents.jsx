@@ -50,8 +50,8 @@ const MainComponents = () => {
   dispatch(setRating(e.target.value));
 }; //funzione per ottenere il valore che viene cliccato dalla select
 
-const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&APPID=863a0ec364a07eeca3e63e33e3324667&lang=it`; // url per quasi tutti i dati
-const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=863a0ec364a07eeca3e63e33e3324667&lang=it`; // url per coordinate e temperature prossimi giorni
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&APPID={APIkey}&lang=it`; // url per quasi tutti i dati
+const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID={APIkey}&lang=it`; // url per coordinate e temperature prossimi giorni
 
         const handleChange = (e) => {
           setQuery(e.target.value);
