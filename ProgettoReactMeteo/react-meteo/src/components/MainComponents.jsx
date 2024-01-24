@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import DateToday from "./DateToday";
 import TimeToday from "./TimeToday";
@@ -16,6 +16,7 @@ import { Line } from 'react-chartjs-2';
 import { setRating } from '../actions/actions';
 import { useDispatch,useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
+
 
 ChartJS.register(
   CategoryScale,
@@ -39,6 +40,7 @@ const MainComponents = () => {
  const [sunrise, setSunrise] = useState([]);
  const [sunset, setSunset] = useState([]);
  const [nextDay, setNextDay] = useState([]);
+ const [tempNextHours, setTempNextHours] = useState([]);
  
  
  const dispatch = useDispatch();
@@ -69,6 +71,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                  // Stato per inserire tempo atmosferico
                 setSunrise(getFormattedTime(data.sys.sunrise)); // Stato per inserire l'alba
                 setSunset(getFormattedTime(data.sys.sunset)); //Stato per inserire tramonto 
+                
                
               } else {
                 alert("Error fetching results"); //se response non è ok
@@ -87,6 +90,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                 const nextDaysData = data2.list.filter((item, index) => index % 8 === 0).slice(0,5);
                 setNextDay(nextDaysData); 
                 
+                setTempNextHours(data2.list);
                 
               } else {
                 alert("Error fetching results");
@@ -279,8 +283,116 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
            
             
         </div>
+        <div>
+          <h1 className="text-center mb-4">Temperature nelle prossime ore:</h1>
+          
+            <Row className=" justify-content-around mx-0" id="row-responsive"> 
+              <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5" > 
+                <Col xs={4} className="m-auto">
+                    <img src= {` https://openweathermap.org/img/wn/${tempNextHours[0]?.weather[0].icon}@2x.png`} alt="" />
+                </Col>
+                <Col xs={8} className="flex-column m-auto">
+                        <h1>{tempNextHours[0]?.dt_txt}</h1>
+                        <br />
+                        <h3 >{(tempNextHours[0]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <br />
+                        <h3>{tempNextHours[0]?.weather[0].description}</h3>
+                </Col>
+              </Col>
+              <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5" > 
+                <Col xs={4} className="m-auto">
+                    <img src= {` https://openweathermap.org/img/wn/${tempNextHours[1]?.weather[0].icon}@2x.png`} alt="" />
+                </Col>
+                <Col xs={8} className="flex-column m-auto">
+                        <h1>{tempNextHours[1]?.dt_txt}</h1>
+                        <br />
+                        <h3 >{(tempNextHours[1]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3>{tempNextHours[1]?.weather[0].description}</h3>
+                </Col>
+              </Col>
+              <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5" > 
+                <Col xs={4} className="m-auto">
+                    <img src= {` https://openweathermap.org/img/wn/${tempNextHours[2]?.weather[0].icon}@2x.png`} alt="" />
+                </Col>
+                <Col xs={8} className="flex-column m-auto">
+                        <h1>{tempNextHours[2]?.dt_txt}</h1>
+                        <br />
+                        <h3 >{(tempNextHours[2]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3>{tempNextHours[2]?.weather[0].description}</h3>
+                </Col>
+              </Col>
+              <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5" > 
+                <Col xs={4} className="m-auto">
+                    <img src= {` https://openweathermap.org/img/wn/${tempNextHours[3]?.weather[0].icon}@2x.png`} alt="" />
+                </Col>
+                <Col xs={8} className="flex-column m-auto">
+                        <h1>{tempNextHours[3]?.dt_txt}</h1>
+                        <br />
+                        <h3 >{(tempNextHours[3]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3>{tempNextHours[3]?.weather[0].description}</h3>
+                </Col>
+              </Col>
+              <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5" > 
+                <Col xs={4} className="m-auto">
+                    <img src= {` https://openweathermap.org/img/wn/${tempNextHours[4]?.weather[0].icon}@2x.png`} alt="" />
+                </Col>
+                <Col xs={8} className="flex-column m-auto">
+                        <h1>{tempNextHours[4]?.dt_txt}</h1>
+                        <br />
+                        <h3 >{(tempNextHours[4]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3>{tempNextHours[4]?.weather[0].description}</h3>
+                </Col>
+              </Col>
+              <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5" > 
+                <Col xs={4} className="m-auto">
+                    <img src= {` https://openweathermap.org/img/wn/${tempNextHours[5]?.weather[0].icon}@2x.png`} alt="" />
+                </Col>
+                <Col xs={8} className="flex-column m-auto">
+                        <h1>{tempNextHours[5]?.dt_txt}</h1>
+                        <br />
+                        <h3 >{(tempNextHours[5]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3>{tempNextHours[5]?.weather[0].description}</h3>
+                </Col>
+              </Col>
+              <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5" > 
+                <Col xs={4} className="m-auto">
+                    <img src= {` https://openweathermap.org/img/wn/${tempNextHours[6]?.weather[0].icon}@2x.png`} alt="" />
+                </Col>
+                <Col xs={8} className="flex-column m-auto">
+                        <h1>{tempNextHours[6]?.dt_txt}</h1>
+                        <br />
+                        <h3 >{(tempNextHours[6]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3>{tempNextHours[6]?.weather[0].description}</h3>
+                </Col>
+              </Col>
+              <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5" > 
+                <Col xs={4} className="m-auto">
+                    <img src= {` https://openweathermap.org/img/wn/${tempNextHours[7]?.weather[0].icon}@2x.png`} alt="" />
+                </Col>
+                <Col xs={8} className="flex-column m-auto">
+                        <h1>{tempNextHours[7]?.dt_txt}</h1>
+                        <br />
+                        <h3 >{(tempNextHours[7]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3>{tempNextHours[7]?.weather[0].description}</h3>
+                </Col>
+              </Col>
+              <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5" > 
+                <Col xs={4} className="m-auto">
+                    <img src= {` https://openweathermap.org/img/wn/${tempNextHours[8]?.weather[0].icon}@2x.png`} alt="" />
+                </Col>
+                <Col xs={8} className="flex-column m-auto">
+                        <h1>{tempNextHours[8]?.dt_txt}</h1>
+                        <br />
+                        <h3 >{(tempNextHours[8]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3>{tempNextHours[8]?.weather[0].description}</h3>
+                </Col>
+              </Col>
+            </Row>
+            
+          
+        </div>
         <Line options={options} data={data} className="bg-white"/>
-
+        
         <div className="text-center other-color pb-5">
               <Link to={`/more-info/${city.name}`}><button className="btn btn-outline-primary mt-4"><b>Per Ulteriori Dati Clicca Qui</b></button></Link>
             </div>

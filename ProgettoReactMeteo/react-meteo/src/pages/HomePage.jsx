@@ -1,5 +1,5 @@
-import MainComponents from "./MainComponents";
-import NavbarComponents from "./NavbarComponents";
+import MainComponents from "../components/MainComponents";
+import NavbarComponents from "../components/NavbarComponents";
 
 
 function HomePage (){

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
-import SpinnerWait from "./SpinnerWait";
+import SpinnerWait from "../components/SpinnerWait";
 
 function MoreInfo (){
     //inizializzazione stati
@@ -97,7 +97,7 @@ function MoreInfo (){
                 <Col xs={8} className="flex-column m-auto">
                     <h1>Temperatura Massima:</h1>
                     <br />
-                    <h3>{ temp.temp_max} °C</h3>
+                    <h3>{(temp.temp_max -273.15).toFixed(2) } °C</h3> 
                 </Col>
                 
             </Col>
@@ -111,7 +111,7 @@ function MoreInfo (){
                 <Col xs={8} className="flex-column m-auto">
                     <h1>Temperatura Minima:</h1>
                     <br />
-                    <h3>{ temp.temp_min} °C</h3>
+                    <h3>{(temp.temp_min -273.15).toFixed(2) }  °C</h3>
                 </Col>
                 
             </Col>
