@@ -14,7 +14,7 @@ function MoreInfo (){
 
 
     const {cityname } = useParams(); // parametro passato con router dom
-    const url3 = `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&APPID={APIkey}&lang=it`; //nuovo url con il dato passato
+    const url3 = `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&APPID=863a0ec364a07eeca3e63e33e3324667&lang=it`; //nuovo url con il dato passato
 
     useEffect(() => {
         setTimeout(() => {
@@ -47,7 +47,7 @@ function MoreInfo (){
         <div>
             <h1 className="text-center">{city1.name}</h1>
         </div>
-        <Row className=" justify-content-around mx-0" id="row-responsive">
+        <Row className=" justify-content-around mx-0" id="row-responsive" >
             <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5">
                 <Col xs={4} className="m-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" className="bi bi-compass-fill" viewBox="0 0 16 16">
@@ -97,7 +97,7 @@ function MoreInfo (){
                 <Col xs={8} className="flex-column m-auto">
                     <h1>Temperatura Massima:</h1>
                     <br />
-                    <h3>{(temp.temp_max -273.15).toFixed(2) } °C</h3> 
+                    <h3>{(temp.temp_max -273.15).toFixed(0) } °C</h3> 
                 </Col>
                 
             </Col>
@@ -111,7 +111,7 @@ function MoreInfo (){
                 <Col xs={8} className="flex-column m-auto">
                     <h1>Temperatura Minima:</h1>
                     <br />
-                    <h3>{(temp.temp_min -273.15).toFixed(2) }  °C</h3>
+                    <h3>{(temp.temp_min -273.15).toFixed(0) }  °C</h3>
                 </Col>
                 
             </Col>

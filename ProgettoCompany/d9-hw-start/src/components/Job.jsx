@@ -21,7 +21,7 @@ const Job = ({ data}) => {
     
     <Col xs={6}>
       <Link to={`/${data.company_name}`} className='pe-4'>{data.company_name}</Link>
-      <button onClick={handleAddToFavorites} className='btn btn-outline-info'> <FaHeart/> Aggiungi ai preferiti</button>
+      <button onClick={handleAddToFavorites} className='btn btn-outline-info'> <FaHeart/>Add to favorites</button>
     </Col>
     <Col xs={6}>
       <a href={data.url} target="_blank" rel="noreferrer">

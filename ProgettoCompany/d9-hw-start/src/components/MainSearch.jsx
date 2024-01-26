@@ -33,8 +33,9 @@ const MainSearch = () => {
     <Container >
       <Row>
         <Col xs={10} className="mx-auto my-3">
-          <h1 className="display-1">Remote Jobs Search</h1>
            <Link to={'/favorites'}><h3 className="btn btn-info">See your favorite list</h3></Link> 
+          <h1 className="display-1">Remote Jobs Search</h1>
+          <h3>Are you looking for a new job? Don't worry, we'll help you. Enter the name of a company and discover what they are looking for.</h3>
         </Col>
         <Col xs={10} className="mx-auto">
           <Form onSubmit={handleSubmit} >
@@ -46,7 +47,7 @@ const MainSearch = () => {
          <Row  className="mx-0 mt-3 p-3"
     style={{ border: '1px solid #00000033', borderRadius: 4 }}>
           <Col xs={6} className="h3">Company Name</Col>
-          <Col xs={6} className="h3">Category</Col>
+          <Col xs={6} className="h3">Rules</Col>
           </Row>
         </Col>
         

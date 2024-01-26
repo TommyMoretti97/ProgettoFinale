@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, Container } from "react-bootstrap";
 import DateToday from "./DateToday";
 import TimeToday from "./TimeToday";
 import {
@@ -41,6 +41,7 @@ const MainComponents = () => {
  const [sunset, setSunset] = useState([]);
  const [nextDay, setNextDay] = useState([]);
  const [tempNextHours, setTempNextHours] = useState([]);
+ const [loading, setLoading] = useState(false);
  
  
  const dispatch = useDispatch();
@@ -50,8 +51,8 @@ const MainComponents = () => {
   dispatch(setRating(e.target.value));
 }; //funzione per ottenere il valore che viene cliccato dalla select
 
-const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&APPID={APIkey}&lang=it`; // url per quasi tutti i dati
-const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID={APIkey}&lang=it`; // url per coordinate e temperature prossimi giorni
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&APPID=863a0ec364a07eeca3e63e33e3324667&lang=it`; // url per quasi tutti i dati
+const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=863a0ec364a07eeca3e63e33e3324667&lang=it`; // url per coordinate e temperature prossimi giorni
 
         const handleChange = (e) => {
           setQuery(e.target.value);
@@ -64,6 +65,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
               const response = await fetch(url); //fetch weather data
               if (response.ok) {
                 const  data  = await response.json();
+                setLoading(true);  //quando carica la fetch mostra i dati
                 setTemperature(data.main); //Stato per inserire temperature,umidità e pressione atmosferica
                 setWind(data.wind); // Stato per inserire velocita vento
                 setCity(data); //Stato per inserire il nome città
@@ -84,13 +86,14 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
               const response2 = await fetch(url2); //fetch forecast data
               if (response2.ok) {
                 const  data2  = await response2.json();
+                setLoading(true); //quando carica la fetch mostra i dati
                 setCoord(data2.city.coord); // Stato per inserire le coordinate(lang e long)
                 
                  // Seleziona i dati dei 5 giorni successivi (un elemento ogni 8 elementi perchè l'API restituisce dati a intervalli di 3 ore)
                 const nextDaysData = data2.list.filter((item, index) => index % 8 === 0).slice(0,5);
                 setNextDay(nextDaysData); 
                 
-                setTempNextHours(data2.list);
+                setTempNextHours(data2.list);// stato per inserire le temperature nelle prossime ore
                 
               } else {
                 alert("Error fetching results");
@@ -165,10 +168,13 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
           </Form>
           </Col>
         </Row>
+        {loading ? (
+          <>
         <h1 className="text-center display-2">{city.name}:</h1>
         <div className="container text-end">
             <h3 className="small ">Aggiornamento delle ore = <TimeToday></TimeToday></h3>
         </div>
+        
           <Row className=" justify-content-around mx-0" id="row-responsive">
             <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5">
                 <Col xs={4} className="m-auto">
@@ -180,7 +186,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                 <Col xs={8} className="flex-column m-auto">
                     <h1>Temperatura:</h1>
                     <br />
-                    <h3>{(temperature.temp -273.15).toFixed(2) } °C</h3>
+                    <h3>{(temperature.temp -273.15).toFixed(0) } °C</h3>
                 </Col>
                 
             </Col>
@@ -214,9 +220,6 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
             </Col>
             <Col xs={11} md={5} lg={3} className="card-meteo d-flex mx-2 mb-5" > 
                 <Col xs={4} className="m-auto">
-                    {/* <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" className="bi bi-cloud-fill" viewBox="0 0 16 16">
-                        <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/>
-                    </svg> */}
                     <img src= {` https://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="" />
                 </Col>
                 <Col xs={8} className="flex-column m-auto">
@@ -255,7 +258,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
           </Row>
         <div className="other-color py-5">
             <h2 className="text-center">{city.name}</h2>
-            <h3 className="text-end px-5">Sono attualmente {(temperature.temp -273.15).toFixed(2) } °C</h3>
+            <h3 className="text-end px-5">Sono attualmente {(temperature.temp -273.15).toFixed(0) } °C</h3>
             <div className="d-flex justify-content-around " id="sun-resp">
                 <div className="col-xs-11 col-md-5 card-meteo d-flex sunrise mb-3">
                     <div className="col-sm-3 m-auto">
@@ -294,7 +297,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                 <Col xs={8} className="flex-column m-auto">
                         <h1>{tempNextHours[0]?.dt_txt}</h1>
                         <br />
-                        <h3 >{(tempNextHours[0]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3 >{(tempNextHours[0]?.main.temp -273.15).toFixed(0)}°C</h3>
                         <br />
                         <h3>{tempNextHours[0]?.weather[0].description}</h3>
                 </Col>
@@ -306,7 +309,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                 <Col xs={8} className="flex-column m-auto">
                         <h1>{tempNextHours[1]?.dt_txt}</h1>
                         <br />
-                        <h3 >{(tempNextHours[1]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3 >{(tempNextHours[1]?.main.temp -273.15).toFixed(0)}°C</h3>
                         <h3>{tempNextHours[1]?.weather[0].description}</h3>
                 </Col>
               </Col>
@@ -317,7 +320,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                 <Col xs={8} className="flex-column m-auto">
                         <h1>{tempNextHours[2]?.dt_txt}</h1>
                         <br />
-                        <h3 >{(tempNextHours[2]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3 >{(tempNextHours[2]?.main.temp -273.15).toFixed(0)}°C</h3>
                         <h3>{tempNextHours[2]?.weather[0].description}</h3>
                 </Col>
               </Col>
@@ -328,7 +331,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                 <Col xs={8} className="flex-column m-auto">
                         <h1>{tempNextHours[3]?.dt_txt}</h1>
                         <br />
-                        <h3 >{(tempNextHours[3]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3 >{(tempNextHours[3]?.main.temp -273.15).toFixed(0)}°C</h3>
                         <h3>{tempNextHours[3]?.weather[0].description}</h3>
                 </Col>
               </Col>
@@ -339,7 +342,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                 <Col xs={8} className="flex-column m-auto">
                         <h1>{tempNextHours[4]?.dt_txt}</h1>
                         <br />
-                        <h3 >{(tempNextHours[4]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3 >{(tempNextHours[4]?.main.temp -273.15).toFixed(0)}°C</h3>
                         <h3>{tempNextHours[4]?.weather[0].description}</h3>
                 </Col>
               </Col>
@@ -350,7 +353,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                 <Col xs={8} className="flex-column m-auto">
                         <h1>{tempNextHours[5]?.dt_txt}</h1>
                         <br />
-                        <h3 >{(tempNextHours[5]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3 >{(tempNextHours[5]?.main.temp -273.15).toFixed(0)}°C</h3>
                         <h3>{tempNextHours[5]?.weather[0].description}</h3>
                 </Col>
               </Col>
@@ -361,7 +364,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                 <Col xs={8} className="flex-column m-auto">
                         <h1>{tempNextHours[6]?.dt_txt}</h1>
                         <br />
-                        <h3 >{(tempNextHours[6]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3 >{(tempNextHours[6]?.main.temp -273.15).toFixed(0)}°C</h3>
                         <h3>{tempNextHours[6]?.weather[0].description}</h3>
                 </Col>
               </Col>
@@ -372,7 +375,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                 <Col xs={8} className="flex-column m-auto">
                         <h1>{tempNextHours[7]?.dt_txt}</h1>
                         <br />
-                        <h3 >{(tempNextHours[7]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3 >{(tempNextHours[7]?.main.temp -273.15).toFixed(0)}°C</h3>
                         <h3>{tempNextHours[7]?.weather[0].description}</h3>
                 </Col>
               </Col>
@@ -383,7 +386,7 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
                 <Col xs={8} className="flex-column m-auto">
                         <h1>{tempNextHours[8]?.dt_txt}</h1>
                         <br />
-                        <h3 >{(tempNextHours[8]?.main.temp -273.15).toFixed(2)}°C</h3>
+                        <h3 >{(tempNextHours[8]?.main.temp -273.15).toFixed(0)}°C</h3>
                         <h3>{tempNextHours[8]?.weather[0].description}</h3>
                 </Col>
               </Col>
@@ -391,13 +394,14 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
             
           
         </div>
-        <Line options={options} data={data} className="bg-white"/>
         
-        <div className="text-center other-color pb-5">
+        <Line options={options} data={data} className="bg-white mx-5 grapich"/>
+        
+        <div className="text-center  pb-5">
               <Link to={`/more-info/${city.name}`}><button className="btn btn-outline-primary mt-4"><b>Per Ulteriori Dati Clicca Qui</b></button></Link>
             </div>
 
-        <div className="other-color">
+        
         <div className="d-flex justify-content-center">
           <h2>Dai un voto alla pagina da 1 a 5: </h2>
         <select value={rating} onChange={handleRatingChange} >
@@ -410,7 +414,10 @@ const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=
         
       </div>
       <h2 className="text-center mb-0">Il tuo voto alla pagina è: {rating}</h2>
-      </div>
+      </>
+      ):(
+        <></>
+      )}
         </>
       )
 }

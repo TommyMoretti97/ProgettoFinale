@@ -24,8 +24,9 @@ const Favorites = () => {
 
   return (
     <div className='w-50 mx-auto text-center'>
-      <h1>Aziende Preferite:</h1>
-      <Link to={'/'} className='btn btn-info mb-4'>Ritorna alla Home</Link>
+      <Link to={'/'} className='btn btn-info my-4'>Return to Home</Link>
+      <h1>Favorites Company:</h1>
+      
       <br />
       {loading ? ( 
         <SpinnerWait />// Mostra lo spinner se loading è true
@@ -42,7 +43,7 @@ const Favorites = () => {
           </li>
         ))
       ) :(
-        <li>Non ci sono preferiti</li>
+        <li><h4>There are no favorite companies</h4></li>
       )}
       </ul>
       )}
